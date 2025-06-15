@@ -31,6 +31,7 @@ st.markdown(f"🔥 **{len(df_filtrado)} oraciones de alabanza encontradas** para
 # Crear mapa centrado en Madrid
 mapa = folium.Map(location=[40.63094569557773, -3.724584186759364], zoom_start=10)
 for _, row in df_filtrado.iterrows():
+    maps_url = f"https://www.google.com/maps/dir/?api=1&destination={row['Latitud']},{row['Longitud']}"
     contenido = contenido = f"""
 <div style="width:300px;">
     <h4 style="margin-bottom: 5px;">{row['Frecuencia']}</h4>
@@ -38,6 +39,7 @@ for _, row in df_filtrado.iterrows():
     <p style="margin: 0;"><strong>🗓️ Día:</strong> {row['Dia']}</p>
     <p style="margin: 0;"><strong>🕖 Hora:</strong> {row['Hora']}</p>
     <p style="margin: 0;"><strong>🕯️ Misa previa:</strong> {row['Misa previa']}</p>
+    <p style="margin-top: 8px;"><a href="{maps_url}" target="_blank">🧭 Cómo llegar 🚗🚇</a></p>
 </div>
 """
     folium.Marker(
