@@ -3,7 +3,7 @@ import folium
 import streamlit as st
 from streamlit_folium import st_folium
 
-df = pd.read_csv('/Users/paoguti/Documents/Bootcamp/Mapa_Alabanza/1Alabanza_Direc.csv', encoding='utf-8-sig', sep=';')
+df = pd.read_csv('Mapa_Alabanza_Madrid/1Alabanza_Direc.csv', encoding='utf-8-sig', sep=';')
 df['Latitud'] = df['Latitud'].str.replace(',', '.').astype(float)
 df['Longitud'] = df['Longitud'].str.replace(',', '.').astype(float)
 
