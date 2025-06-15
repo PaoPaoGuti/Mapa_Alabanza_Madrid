@@ -33,18 +33,18 @@ mapa = folium.Map(location=[40.63094569557773, -3.724584186759364], zoom_start=1
 for _, row in df_filtrado.iterrows():
     maps_url = f"https://www.google.com/maps/dir/?api=1&destination={row['Latitud']},{row['Longitud']}"
     contenido = contenido = f"""
-<div style="width:300px;">
-    <h4 style="margin-bottom: 5px;">{row['Frecuencia']}</h4>
+<div style="width:250px;">
+    <h4 style="margin-bottom: 4px;">{row['Frecuencia']}</h4>
     <p style="margin: 0;"><strong>⛪ Lugar:</strong> {row['Nombre']}</p>
     <p style="margin: 0;"><strong>🗓️ Día:</strong> {row['Dia']}</p>
     <p style="margin: 0;"><strong>🕖 Hora:</strong> {row['Hora']}</p>
     <p style="margin: 0;"><strong>🕯️ Misa previa:</strong> {row['Misa previa']}</p>
-    <p style="margin-top: 8px;"><a href="{maps_url}" target="_blank">🧭 Cómo llegar 🚗🚇</a></p>
+    <p style="margin-top: 8px;"><a href="{maps_url}" target="_blank">📍🧭 Cómo llegar 🚗🚇</a></p>
 </div>
 """
     folium.Marker(
         location=[row['Latitud'], row['Longitud']],
-        popup=contenido,
+        popup=folium.Popup(contenido, max_width=300, parse_html=True),
             icon=folium.CustomIcon(
                 icon_image='espiritu-santo.png',
                 icon_size=(30, 30)
