@@ -3,14 +3,14 @@ import folium
 import streamlit as st
 from streamlit_folium import st_folium
 
-df = pd.read_csv('Mapa_Alabanza_Madrid/1Alabanza_Direc.csv', encoding='utf-8-sig', sep=';')
+df = pd.read_csv('1Alabanza_Direc.csv', encoding='utf-8-sig', sep=';')
 df['Latitud'] = df['Latitud'].str.replace(',', '.').astype(float)
 df['Longitud'] = df['Longitud'].str.replace(',', '.').astype(float)
 
 # Título y logo
 col1, col2 = st.columns([1, 6])  # Ajusta proporción según tamaño imagen/título
 with col1:
-    st.image('/Users/paoguti/Documents/Bootcamp/Mapa_Alabanza/espiritu-santo.png', width=75)
+    st.image('espiritu-santo.png', width=75)
 with col2:
     st.title("Mapa de Alabanzas en Madrid")
 
@@ -44,7 +44,7 @@ for _, row in df_filtrado.iterrows():
         location=[row['Latitud'], row['Longitud']],
         popup=contenido,
             icon=folium.CustomIcon(
-                icon_image='/Users/paoguti/Documents/Bootcamp/Mapa_Alabanza/espiritu-santo.png',
+                icon_image='espiritu-santo.png',
                 icon_size=(30, 30)
             ),
         tooltip=row['Nombre']
