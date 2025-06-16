@@ -12,7 +12,7 @@ col1, col2 = st.columns([1, 6])  # Ajusta proporción según tamaño imagen/tít
 with col1:
     st.image('espiritu-santo.png', width=75)
 with col2:
-    st.title("Mapa de Alabanzas en Madrid")
+    st.title("Alabanzas en Madrid")
 
 # Filtrado por día
 with st.sidebar:
