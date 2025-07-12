@@ -1,4 +1,5 @@
 streamlit
+streamlit-geolocation
 pandas
 folium
 streamlit-folium
