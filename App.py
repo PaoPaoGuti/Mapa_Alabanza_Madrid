@@ -3,9 +3,6 @@ import folium
 import streamlit as st
 import streamlit_geolocation
 from streamlit_folium import st_folium
-from streamlit_js_eval import streamlit_js_eval, get_geolocation
-from geopy.distance import geodesic
-from streamlit_geolocation import geolocation
 
 
 df = pd.read_csv('1Alabanza_Direc.csv', encoding='utf-8-sig', sep=';')
@@ -18,14 +15,6 @@ with col1:
     st.image('espiritu-santo.png', width=75)
 with col2:
     st.title("Alabanza en Madrid")
-
-result = streamlit_js_eval(
-    js_expressions="navigator.geolocation.getCurrentPosition((pos) => pos.coords)",
-    key="test_location",
-    want_return=True
-)
-
-st.write(result)
 
 # Filtrado por día
 with st.sidebar:
@@ -56,20 +45,6 @@ if misa_seleccionada != "Todos":
 
 if frec_seleccionadas:
     df_filtrado = df_filtrado[df_filtrado['Frecuencia'].isin(frec_seleccionadas)]
-
-# Filtro por proximidad
-
-usar_ubicacion = st.sidebar.checkbox("📍 Mostrar solo oraciones cerca de mí (15 km)")
-
-user_coords = None
-if usar_ubicacion:
-    loc_data = geolocation()
-    if loc_data:
-        user_coords = (loc_data['latitude'], loc_data['longitude'])
-        st.success(f"📍 Ubicación detectada: lat={user_coords[0]}, lon={user_coords[1]}")
-    else:
-        st.warning("No se pudo obtener tu ubicación. Asegúrate de permitir el acceso en tu navegador.")
-
 
 st.markdown(f"🔥 **{len(df_filtrado)} oraciones de alabanza encontradas** para: {', '.join(dias_seleccionados) if dias_seleccionados else 'Todos los días'}")
 
