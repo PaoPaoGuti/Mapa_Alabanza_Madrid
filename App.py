@@ -18,6 +18,14 @@ with col1:
 with col2:
     st.title("Alabanza en Madrid")
 
+result = streamlit_js_eval(
+    js_expressions="navigator.geolocation.getCurrentPosition((pos) => pos.coords)",
+    key="test_location",
+    want_return=True
+)
+
+st.write(result)
+
 # Filtrado por día
 with st.sidebar:
     st.header("🎛️ Filtros")
@@ -149,10 +157,3 @@ st_folium(mapa, width=700, height=500)
 #git pull origin main --rebase
 #git push origin main
 
-result = streamlit_js_eval(
-    js_expressions="navigator.geolocation.getCurrentPosition((pos) => pos.coords)",
-    key="test_location",
-    want_return=True
-)
-
-st.write(result)
