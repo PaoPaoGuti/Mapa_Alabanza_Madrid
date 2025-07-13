@@ -148,3 +148,11 @@ st_folium(mapa, width=700, height=500)
 
 #git pull origin main --rebase
 #git push origin main
+
+result = streamlit_js_eval(
+    js_expressions="navigator.geolocation.getCurrentPosition((pos) => pos.coords)",
+    key="test_location",
+    want_return=True
+)
+
+st.write(result)
