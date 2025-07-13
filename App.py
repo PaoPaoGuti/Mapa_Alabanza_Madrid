@@ -31,7 +31,46 @@ with st.sidebar:
 df_filtrado = df[df['Dia'].isin(dias_seleccionados)] if dias_seleccionados else df
 
 # Filtro por proximidad
+
+if 'user_coords' not in st.session_state:
+    st.session_state['user_coords'] = None
+
 usar_ubicacion = st.sidebar.checkbox("Mostrar solo oraciones cerca de mí (15 km)")
+
+if usar_ubicacion and st.session_state['user_coords'] is None:
+    with st.spinner("Detectando ubicación..."):
+        result = streamlit_js_eval(
+            js_expressions="navigator.geolocation.getCurrentPosition((pos) => pos.coords)",
+            key="get_location",
+            want_return=True
+        )
+    if result and isinstance(result, dict):
+        lat = result.get("latitude")
+        lon = result.get("longitude")
+        if lat and lon:
+            st.session_state['user_coords'] = (lat, lon)
+            st.success(f"📍 Ubicación detectada: lat={lat}, lon={lon}")
+        else:
+            st.warning("No se pudo obtener latitud y longitud correctamente.")
+    else:
+        st.warning("No se pudo obtener la ubicación. Verifica los permisos del navegador.")
+elif usar_ubicacion and st.session_state['user_coords'] is not None:
+    lat, lon = st.session_state['user_coords']
+    st.success(f"📍 Ubicación detectada: lat={lat}, lon={lon}")
+else:
+    st.session_state['user_coords'] = None
+
+# Después de aplicar los demás filtros al df_filtrado...
+
+if usar_ubicacion and st.session_state['user_coords']:
+    def esta_cerca(row):
+        lugar_coords = (row['Latitud'], row['Longitud'])
+        distancia = geodesic(lugar_coords, st.session_state['user_coords']).km
+        return distancia <= 15
+
+    df_filtrado = df_filtrado[df_filtrado.apply(esta_cerca, axis=1)]
+
+'''usar_ubicacion = st.sidebar.checkbox("Mostrar solo oraciones cerca de mí (15 km)")
 user_coords = None
 
 if usar_ubicacion:
@@ -52,7 +91,7 @@ if usar_ubicacion:
             st.warning("No se pudo obtener latitud y longitud correctamente.")
     else:
         st.warning("No se pudo obtener la ubicación. Verifica los permisos del navegador.")
-
+'''
 
 
 
