@@ -21,14 +21,42 @@ with col2:
 # Filtrado por día
 with st.sidebar:
     st.header("🎛️ Filtros")
+
+    # Filtro por día
+    st.markdown("📅 Selecciona uno o más días:")
     dias_seleccionados = []
-    cols = st.columns(1)
-    st.markdown("Selecciona uno o más días:")
     for dia in ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']:
         if st.checkbox(dia, True, key=dia):
             dias_seleccionados.append(dia)
 
-df_filtrado = df[df['Dia'].isin(dias_seleccionados)] if dias_seleccionados else df
+    # Filtro por barrio/zona
+    zona_opciones = df['Zona'].dropna().unique().tolist()
+    zona_seleccionadas = st.multiselect("🏙️ Zona o barrio", zona_opciones, default=zona_opciones)
+
+    # Filtro por misa previa
+    misa_opciones = df['Misa previa'].dropna().unique().tolist()
+    misa_seleccionada = st.selectbox("🕯️ ¿Con misa previa?", ["Todos"] + misa_opciones)
+
+    # Filtro por frecuencia
+    frec_opciones = df['Frecuencia'].dropna().unique().tolist()
+    frec_seleccionadas = st.multiselect("📆 Frecuencia", frec_opciones, default=frec_opciones)
+
+    # Filtro por proximidad
+    usar_ubicacion = st.checkbox("📍 Mostrar solo oraciones cerca de mí (15 km)")
+
+df_filtrado = df.copy()
+
+if dias_seleccionados:
+    df_filtrado = df_filtrado[df_filtrado['Dia'].isin(dias_seleccionados)]
+
+if zona_seleccionadas:
+    df_filtrado = df_filtrado[df_filtrado['Zona'].isin(zona_seleccionadas)]
+
+if misa_seleccionada != "Todos":
+    df_filtrado = df_filtrado[df_filtrado['Misa previa'] == misa_seleccionada]
+
+if frec_seleccionadas:
+    df_filtrado = df_filtrado[df_filtrado['Frecuencia'].isin(frec_seleccionadas)]
 
 # Filtro por proximidad
 
