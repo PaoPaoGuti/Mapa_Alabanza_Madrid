@@ -29,10 +29,6 @@ with st.sidebar:
         if st.checkbox(dia, True, key=dia):
             dias_seleccionados.append(dia)
 
-    # Filtro por barrio/zona
-    zona_opciones = df['Zona'].dropna().unique().tolist()
-    zona_seleccionadas = st.multiselect("🏙️ Zona o barrio", zona_opciones, default=zona_opciones)
-
     # Filtro por misa previa
     misa_opciones = df['Misa previa'].dropna().unique().tolist()
     misa_seleccionada = st.selectbox("🕯️ ¿Con misa previa?", ["Todos"] + misa_opciones)
@@ -41,16 +37,10 @@ with st.sidebar:
     frec_opciones = df['Frecuencia'].dropna().unique().tolist()
     frec_seleccionadas = st.multiselect("📆 Frecuencia", frec_opciones, default=frec_opciones)
 
-    # Filtro por proximidad
-    usar_ubicacion = st.checkbox("📍 Mostrar solo oraciones cerca de mí (15 km)")
-
 df_filtrado = df.copy()
 
 if dias_seleccionados:
     df_filtrado = df_filtrado[df_filtrado['Dia'].isin(dias_seleccionados)]
-
-if zona_seleccionadas:
-    df_filtrado = df_filtrado[df_filtrado['Zona'].isin(zona_seleccionadas)]
 
 if misa_seleccionada != "Todos":
     df_filtrado = df_filtrado[df_filtrado['Misa previa'] == misa_seleccionada]
@@ -98,29 +88,27 @@ if usar_ubicacion and st.session_state['user_coords']:
 
     df_filtrado = df_filtrado[df_filtrado.apply(esta_cerca, axis=1)]
 
-'''usar_ubicacion = st.sidebar.checkbox("Mostrar solo oraciones cerca de mí (15 km)")
-user_coords = None
+#usar_ubicacion = st.sidebar.checkbox("Mostrar solo oraciones cerca de mí (15 km)")
+#user_coords = None
 
-if usar_ubicacion:
-    result = streamlit_js_eval(
-        js_expressions="navigator.geolocation.getCurrentPosition((pos) => pos.coords)",
-        key="get_location",
-        want_return=True
-    )
+#if usar_ubicacion:
+#    result = streamlit_js_eval(
+#        js_expressions="navigator.geolocation.getCurrentPosition((pos) => pos.coords)",
+#        key="get_location",
+#        want_return=True
+#    )
 
-    if result and isinstance(result, dict):
-        lat = result.get("latitude")
-        lon = result.get("longitude")
+#    if result and isinstance(result, dict):
+#        lat = result.get("latitude")
+#        lon = result.get("longitude")
 
-        if lat and lon:
-            user_coords = (lat, lon)
-            st.success(f"📍 Ubicación detectada: lat={lat}, lon={lon}")
-        else:
-            st.warning("No se pudo obtener latitud y longitud correctamente.")
-    else:
-        st.warning("No se pudo obtener la ubicación. Verifica los permisos del navegador.")
-'''
-
+#        if lat and lon:
+#            user_coords = (lat, lon)
+#            st.success(f"📍 Ubicación detectada: lat={lat}, lon={lon}")
+#        else:
+#            st.warning("No se pudo obtener latitud y longitud correctamente.")
+#    else:
+#        st.warning("No se pudo obtener la ubicación. Verifica los permisos del navegador.")
 
 
 st.markdown(f"🔥 **{len(df_filtrado)} oraciones de alabanza encontradas** para: {', '.join(dias_seleccionados) if dias_seleccionados else 'Todos los días'}")
@@ -153,10 +141,10 @@ for _, row in df_filtrado.iterrows():
 st_folium(mapa, width=700, height=500)
 
 
-'''git add App.py
-git commit -m "Arreglar popup para mostrar enlace de Google Maps en marcador"
-git push origin main
+#git add App.py
+#git commit -m "Arreglar popup para mostrar enlace de Google Maps en marcador"
+#git push origin main
 
 
-git pull origin main --rebase
-git push origin main'''
+#git pull origin main --rebase
+#git push origin main
