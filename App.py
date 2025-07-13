@@ -5,6 +5,7 @@ import streamlit_geolocation
 from streamlit_folium import st_folium
 from streamlit_js_eval import streamlit_js_eval, get_geolocation
 from geopy.distance import geodesic
+from streamlit_geolocation import geolocation
 
 
 df = pd.read_csv('1Alabanza_Direc.csv', encoding='utf-8-sig', sep=';')
@@ -58,65 +59,16 @@ if frec_seleccionadas:
 
 # Filtro por proximidad
 
-if 'user_coords' not in st.session_state:
-    st.session_state['user_coords'] = None
+usar_ubicacion = st.sidebar.checkbox("📍 Mostrar solo oraciones cerca de mí (15 km)")
 
-usar_ubicacion = st.sidebar.checkbox("Mostrar solo oraciones cerca de mí (15 km)")
-
-if usar_ubicacion and st.session_state['user_coords'] is None:
-    with st.spinner("Detectando ubicación..."):
-        result = streamlit_js_eval(
-            js_expressions="navigator.geolocation.getCurrentPosition((pos) => pos.coords)",
-            key="get_location",
-            want_return=True
-        )
-    if result and isinstance(result, dict):
-        lat = result.get("latitude")
-        lon = result.get("longitude")
-        if lat and lon:
-            st.session_state['user_coords'] = (lat, lon)
-            st.success(f"📍 Ubicación detectada: lat={lat}, lon={lon}")
-        else:
-            st.warning("No se pudo obtener latitud y longitud correctamente.")
+user_coords = None
+if usar_ubicacion:
+    loc_data = geolocation()
+    if loc_data:
+        user_coords = (loc_data['latitude'], loc_data['longitude'])
+        st.success(f"📍 Ubicación detectada: lat={user_coords[0]}, lon={user_coords[1]}")
     else:
-        st.warning("No se pudo obtener la ubicación. Verifica los permisos del navegador.")
-elif usar_ubicacion and st.session_state['user_coords'] is not None:
-    lat, lon = st.session_state['user_coords']
-    st.success(f"📍 Ubicación detectada: lat={lat}, lon={lon}")
-else:
-    st.session_state['user_coords'] = None
-
-# Después de aplicar los demás filtros al df_filtrado...
-
-if usar_ubicacion and st.session_state['user_coords']:
-    def esta_cerca(row):
-        lugar_coords = (row['Latitud'], row['Longitud'])
-        distancia = geodesic(lugar_coords, st.session_state['user_coords']).km
-        return distancia <= 15
-
-    df_filtrado = df_filtrado[df_filtrado.apply(esta_cerca, axis=1)]
-
-#usar_ubicacion = st.sidebar.checkbox("Mostrar solo oraciones cerca de mí (15 km)")
-#user_coords = None
-
-#if usar_ubicacion:
-#    result = streamlit_js_eval(
-#        js_expressions="navigator.geolocation.getCurrentPosition((pos) => pos.coords)",
-#        key="get_location",
-#        want_return=True
-#    )
-
-#    if result and isinstance(result, dict):
-#        lat = result.get("latitude")
-#        lon = result.get("longitude")
-
-#        if lat and lon:
-#            user_coords = (lat, lon)
-#            st.success(f"📍 Ubicación detectada: lat={lat}, lon={lon}")
-#        else:
-#            st.warning("No se pudo obtener latitud y longitud correctamente.")
-#    else:
-#        st.warning("No se pudo obtener la ubicación. Verifica los permisos del navegador.")
+        st.warning("No se pudo obtener tu ubicación. Asegúrate de permitir el acceso en tu navegador.")
 
 
 st.markdown(f"🔥 **{len(df_filtrado)} oraciones de alabanza encontradas** para: {', '.join(dias_seleccionados) if dias_seleccionados else 'Todos los días'}")
