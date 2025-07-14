@@ -32,7 +32,7 @@ with st.sidebar:
 
     # Filtro por frecuencia
     frec_opciones = df['Frecuencia'].dropna().unique().tolist()
-    frec_seleccionadas = st.multiselect("📆 Frecuencia", frec_opciones, default=frec_opciones)
+    frec_seleccionadas = st.selectbox("📆 Frecuencia", frec_opciones, default=frec_opciones)
 
 df_filtrado = df.copy()
 
