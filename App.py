@@ -28,7 +28,7 @@ with st.sidebar:
 
     # Filtro por misa previa
     misa_opciones = df['Misa previa'].dropna().unique().tolist()
-    misa_seleccionada = st.selectbox("🕯️ ¿Con misa previa?", ["Todos"] + misa_opciones)
+    misa_seleccionada = st.sidebar.selectbox("🕯️ ¿Hay misa previa?", ["Todas", "Sí", "No"])
 
     # Filtro por frecuencia
     frec_opciones = df['Frecuencia'].dropna().unique().tolist()
@@ -39,12 +39,14 @@ df_filtrado = df.copy()
 if dias_seleccionados:
     df_filtrado = df_filtrado[df_filtrado['Dia'].isin(dias_seleccionados)]
 
-if misa_seleccionada != "Todos":
-    df_filtrado = df_filtrado[df_filtrado['Misa previa'] == misa_seleccionada]
-
+if opcion_misa == "Sí":
+    df_filtrado = df_filtrado[df_filtrado["Misa previa"].str.lower() != "no"]
+elif opcion_misa == "No":
+    df_filtrado = df_filtrado[df_filtrado["Misa previa"].str.lower() == "no"]
+    
 if frec_seleccionada != "Todas":
     df_filtrado = df_filtrado[df_filtrado["Frecuencia"] == frec_seleccionada]
-    
+
 st.markdown(f"🔥 **{len(df_filtrado)} oraciones de alabanza encontradas** para: {', '.join(dias_seleccionados) if dias_seleccionados else 'Todos los días'}")
 
 # Crear mapa centrado en Madrid
