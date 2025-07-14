@@ -7,6 +7,8 @@ from streamlit_folium import st_folium
 df = pd.read_csv('1Alabanza_Direc.csv', encoding='utf-8-sig', sep=';')
 df['Latitud'] = df['Latitud'].str.replace(',', '.').astype(float)
 df['Longitud'] = df['Longitud'].str.replace(',', '.').astype(float)
+df["Misa previa"] = df["Misa previa"].fillna("no").str.strip().str.lower()
+
 
 # Título y logo
 col1, col2 = st.columns([1, 6])  # Ajusta proporción según tamaño imagen/título
@@ -27,8 +29,7 @@ with st.sidebar:
             dias_seleccionados.append(dia)
 
     # Filtro por misa previa
-    misa_opciones = df['Misa previa'].dropna().unique().tolist()
-    misa_seleccionada = st.sidebar.selectbox("🕯️ ¿Hay misa previa?", ["Todas", "Sí", "No"])
+    misa_seleccionada = st.selectbox("🕯️ ¿Hay misa previa?", ["Todas", "Sí", "No"])
 
     # Filtro por frecuencia
     frec_opciones = df['Frecuencia'].dropna().unique().tolist()
@@ -39,11 +40,11 @@ df_filtrado = df.copy()
 if dias_seleccionados:
     df_filtrado = df_filtrado[df_filtrado['Dia'].isin(dias_seleccionados)]
 
-if opcion_misa == "Sí":
-    df_filtrado = df_filtrado[df_filtrado["Misa previa"].str.lower() != "no"]
-elif opcion_misa == "No":
-    df_filtrado = df_filtrado[df_filtrado["Misa previa"].str.lower() == "no"]
-    
+if misa_seleccionada == "Sí":
+    df_filtrado = df_filtrado[df_filtrado["Misa previa"] != "no"]
+elif misa_seleccionada == "No":
+    df_filtrado = df_filtrado[df_filtrado["Misa previa"] == "no"]
+
 if frec_seleccionada != "Todas":
     df_filtrado = df_filtrado[df_filtrado["Frecuencia"] == frec_seleccionada]
 
