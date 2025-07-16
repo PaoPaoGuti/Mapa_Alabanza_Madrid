@@ -44,7 +44,6 @@ with st.sidebar:
     #}
 
     def clasificar_frecuencia(f):
-    f_lower = f.lower()
 
     if "semanal" in f_lower:
         return "Semanal"
