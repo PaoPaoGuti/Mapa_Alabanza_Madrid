@@ -16,23 +16,18 @@ col1, col2 = st.columns([1, 6])  # Ajusta proporción según tamaño imagen/tít
 with col1:
     st.image('espiritu-santo.png', width=75)
 with col2:
-    st.title("Alabanza en Madrid")
+    st.title("Alabanza en Madrid: Encuentra dónde glorificar a Dios juntos")
 
 with st.container():
-    st.markdown("### 🔥 Oración de Alabanza en Madrid: Encuentra dónde glorificar a Dios juntos")
     st.markdown("> _\"Te alabaré, Señor, con todo mi corazón, contaré todas tus maravillas.\"_  \n> — **Salmo 9,1**")
     st.markdown("""
-    La oración de **alabanza** es una forma esencial de nuestra vida espiritual: no pide ni agradece, sino que **glorifica a Dios por quien es**.  
-    Según el **Catecismo de la Iglesia Católica (n.º 2639)**, la alabanza es la forma de oración que reconoce más inmediatamente que Dios es Dios.  
-    Une a los fieles en comunidad, eleva el alma y fortalece la fe.
-
     Esta plataforma reúne en un solo lugar todas las **oraciones de alabanza** celebradas en Madrid:  
     📍 **Ubicación**, 🗓️ **día**, ⏰ **hora**, 🔁 **frecuencia** y 🧭 cómo llegar fácilmente.
 
     ¡Descubre dónde unirte para alabar a Dios en comunidad!
     """)
 
-# Filtrado por día
+# Filtros
 with st.sidebar:
     st.header("🎛️ Filtros")
 
@@ -109,15 +104,30 @@ for _, row in df_filtrado.iterrows():
 st_folium(mapa, width=700, height=500)
 
 with st.sidebar:
-    st.header("📲 Comparte esta app")
+    st.header("📢 Comparte esta app")
     st.markdown("""
-    <a href="https://wa.me/?text=Descubre%20las%20oraciones%20de%20alabanza%20en%20Madrid%20con%20mapa,%20horarios%20y%20cómo%20llegar:%20https://nombre-de-tu-app.streamlit.app"
+    <a href="https://wa.me/?text=Descubre%20las%20oraciones%20de%20alabanza%20en%20Madrid%20con%20mapa,%20horarios%20y%20cómo%20llegar:%20https://mapa-alabanza-madrid.streamlit.app/"
     target="_blank">
     <button style='background-color:#25D366; color:white; border:none; padding:10px 16px; border-radius:5px; font-size:16px; cursor:pointer;'>
         Compartir por WhatsApp 📲
     </button>
     </a>
     """, unsafe_allow_html=True)
+
+with st.sidebar:
+    st.header("📝 Incluye tu oración de alabanza")
+    st.markdown("""
+    Si quieres que incluyamos tu oración de alabanza, por favor completa este formulario:
+    [🧾 Formulario de inclusión](https://forms.gle/Wf8KeyjqswDLubkk7)
+    """)
+
+st.success("¡Gracias por contribuir con tu oración!")
+
+with st.sidebar:
+    st.header("📣 Para recibir los carteles")
+    st.markdown("""
+    [💬 Únete al grupo de whatsapp](https://chat.whatsapp.com/GGb3jXatphAIDwQqd4cUw9)
+    """)
 
 #git add App.py
 #git commit -m "Arreglar popup para mostrar enlace de Google Maps en marcador"
