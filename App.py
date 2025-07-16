@@ -33,7 +33,14 @@ with st.sidebar:
 
     # Filtro por frecuencia
     frec_opciones = df['Frecuencia'].dropna().unique().tolist()
-    frec_seleccionada = st.selectbox("📆 Frecuencia", ["Todas"] + frec_opciones)
+    frecuencia_personalizada = st.selectbox("📆 Frecuencia", ["Todas", "Semanal", "Una vez al mes", "Otros"])
+
+# Mapeo personalizado de frecuencias
+    frecuencia_mapeo = {
+        "Semanal": ["Semanal"],
+        "Una vez al mes": ["Una vez al mes"],
+        "Otros": ["Cada 15 días", "Dos veces al mes", "Cada dos semanas", "Quincenal"]
+
 
 df_filtrado = df.copy()
 
@@ -45,8 +52,9 @@ if misa_seleccionada == "Sí":
 elif misa_seleccionada == "No":
     df_filtrado = df_filtrado[df_filtrado["Misa previa"] == "no"]
 
-if frec_seleccionada != "Todas":
-    df_filtrado = df_filtrado[df_filtrado["Frecuencia"] == frec_seleccionada]
+if frecuencia_personalizada != "Todas":
+    df_filtrado = df_filtrado[df_filtrado["Frecuencia"].isin(frecuencia_mapeo.get(frecuencia_personalizada, []))]
+
 
 st.markdown(f"🔥 **{len(df_filtrado)} oraciones de alabanza encontradas** para: {', '.join(dias_seleccionados) if dias_seleccionados else 'Todos los días'}")
 
