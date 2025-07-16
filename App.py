@@ -44,16 +44,16 @@ with st.sidebar:
     #}
 
     def clasificar_frecuencia(f):
-    f_lower = str(f).lower()
+        f_lower = str(f).lower()
 
-    if "semanal" in f_lower:
-        return "Semanal"
-    elif "y" in f_lower:
-        return "Otros"
-    elif any(p in f_lower for p in ["ultimo", "primer", "segundo", "tercer", "mensual"]):
-        return "Una vez al mes"
-    else:
-        return "Otros"
+        if "semanal" in f_lower:
+            return "Semanal"
+        elif "y" in f_lower:
+            return "Otros"
+        elif any(p in f_lower for p in ["ultimo", "primer", "segundo", "tercer", "mensual"]):
+            return "Una vez al mes"
+        else:
+            return "Otros"
 
 df['Frecuencia_categoria'] = df['Frecuencia'].apply(clasificar_frecuencia)
 
