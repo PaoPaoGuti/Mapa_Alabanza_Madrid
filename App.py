@@ -45,16 +45,16 @@ with st.sidebar:
 
     def clasificar_frecuencia(f):
 
-    if "semanal" in f:
-        return "Semanal"
-    elif "y" in f:
-        return "Otros"
-    elif any(palabra in f for palabra in ["ultimo", "primer", "segundo", "tercer", "mensual"]):
-        return "Una vez al mes"
-    else:
-        return "Otros"
+        if "semanal" in f:
+            return "Semanal"
+        elif "y" in f:
+            return "Otros"
+        elif any(palabra in f for palabra in ["ultimo", "primer", "segundo", "tercer", "mensual"]):
+            return "Una vez al mes"
+        else:
+            return "Otros"
 
-df['Frecuencia_categoria'] = df['Frecuencia'].apply(clasificar_frecuencia)
+    df['Frecuencia_categoria'] = df['Frecuencia'].apply(clasificar_frecuencia)
 
 df_filtrado = df.copy()
 
