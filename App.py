@@ -41,7 +41,7 @@ with st.sidebar:
         "Semanal": ["Semanal"],
         "Una vez al mes": ["Ultimo lunes de cada mes", "Tercer lunes de cada mes", "Segundo martes de cada mes", "Ultimo martes de cada mes", "Tercer miercoles de cada mes", "Primer jueves de cada mes", "Primer viernes de cada mes", "Tercer sabado de cada mes", "Mensual"],
         "Otros": ["Segundo y cuarto domingo de cada mes"]
-
+    }
 
 df_filtrado = df.copy()
 
