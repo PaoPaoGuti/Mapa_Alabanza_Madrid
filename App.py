@@ -45,11 +45,11 @@ with st.sidebar:
 
     def clasificar_frecuencia(f):
 
-    if "semanal" in f_lower:
+    if "semanal" in f:
         return "Semanal"
-    elif "y" in f_lower:
+    elif "y" in f:
         return "Otros"
-    elif any(palabra in f_lower for palabra in ["ultimo", "primer", "segundo", "tercer", "mensual"]):
+    elif any(palabra in f for palabra in ["ultimo", "primer", "segundo", "tercer", "mensual"]):
         return "Una vez al mes"
     else:
         return "Otros"
