@@ -18,6 +18,20 @@ with col1:
 with col2:
     st.title("Alabanza en Madrid")
 
+with st.container():
+    st.markdown("### 🔥 Oración de Alabanza en Madrid: Encuentra dónde glorificar a Dios juntos")
+    st.markdown("> _\"Te alabaré, Señor, con todo mi corazón, contaré todas tus maravillas.\"_  \n> — **Salmo 9,1**")
+    st.markdown("""
+    La oración de **alabanza** es una forma esencial de nuestra vida espiritual: no pide ni agradece, sino que **glorifica a Dios por quien es**.  
+    Según el **Catecismo de la Iglesia Católica (n.º 2639)**, la alabanza es la forma de oración que reconoce más inmediatamente que Dios es Dios.  
+    Une a los fieles en comunidad, eleva el alma y fortalece la fe.
+
+    Esta plataforma reúne en un solo lugar todas las **oraciones de alabanza** celebradas en Madrid:  
+    📍 **Ubicación**, 🗓️ **día**, ⏰ **hora**, 🔁 **frecuencia** y 🧭 cómo llegar fácilmente.
+
+    ¡Descubre dónde unirte para alabar a Dios en comunidad!
+    """)
+
 # Filtrado por día
 with st.sidebar:
     st.header("🎛️ Filtros")
@@ -35,13 +49,6 @@ with st.sidebar:
     # Filtro por frecuencia
     frec_opciones = df['Frecuencia'].dropna().unique().tolist()
     frecuencia_personalizada = st.selectbox("📆 Frecuencia", ["Todas", "Semanal", "Una vez al mes", "Otros"])
-
-# Mapeo personalizado de frecuencias
-    #frecuencia_mapeo = {
-        #"Semanal": ["Semanal"],
-        #"Una vez al mes": ["Ultimo lunes de cada mes", "Tercer lunes de cada mes", "Segundo martes de cada mes", "Ultimo martes de cada mes", "Tercer miercoles de cada mes", "Primer jueves de cada mes", "Primer viernes de cada mes", "Tercer sabado de cada mes", "Mensual"],
-        #"Otros": ["Segundo y cuarto domingo de cada mes"]
-    #}
 
     def clasificar_frecuencia(f):
         f_lower = str(f).lower()
