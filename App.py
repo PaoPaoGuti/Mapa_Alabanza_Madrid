@@ -109,7 +109,7 @@ for _, row in df_filtrado.iterrows():
 st_folium(mapa, width=700, height=500)
 
 with st.sidebar:
-    st.header("### 📲 Comparte esta app")
+    st.header("📲 Comparte esta app")
     st.markdown("""
     <a href="https://wa.me/?text=Descubre%20las%20oraciones%20de%20alabanza%20en%20Madrid%20con%20mapa,%20horarios%20y%20cómo%20llegar:%20https://nombre-de-tu-app.streamlit.app"
     target="_blank">
