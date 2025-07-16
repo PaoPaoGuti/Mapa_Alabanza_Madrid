@@ -8,6 +8,7 @@ df = pd.read_csv('1Alabanza_Direc.csv', encoding='utf-8-sig', sep=';')
 df['Latitud'] = df['Latitud'].str.replace(',', '.').astype(float)
 df['Longitud'] = df['Longitud'].str.replace(',', '.').astype(float)
 df["Misa previa"] = df["Misa previa"].fillna("no").str.strip().str.lower()
+df["Frecuencia"] = df["Frecuencia"].str.strip().str.lower().str.capitalize()
 
 
 # Título y logo
@@ -38,8 +39,8 @@ with st.sidebar:
 # Mapeo personalizado de frecuencias
     frecuencia_mapeo = {
         "Semanal": ["Semanal"],
-        "Una vez al mes": ["Una vez al mes"],
-        "Otros": ["Cada 15 días", "Dos veces al mes", "Cada dos semanas", "Quincenal"]
+        "Una vez al mes": ["Ultimo lunes de cada mes", "Tercer lunes de cada mes", "Segundo martes de cada mes", "Ultimo martes de cada mes", "Tercer miercoles de cada mes", "Primer jueves de cada mes", "Primer viernes de cada mes", "Tercer sabado de cada mes", "Mensual"],
+        "Otros": ["Segundo y cuarto domingo de cada mes"]
 
 
 df_filtrado = df.copy()
