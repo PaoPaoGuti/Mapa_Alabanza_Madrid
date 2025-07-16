@@ -37,11 +37,25 @@ with st.sidebar:
     frecuencia_personalizada = st.selectbox("📆 Frecuencia", ["Todas", "Semanal", "Una vez al mes", "Otros"])
 
 # Mapeo personalizado de frecuencias
-    frecuencia_mapeo = {
-        "Semanal": ["Semanal"],
-        "Una vez al mes": ["Ultimo lunes de cada mes", "Tercer lunes de cada mes", "Segundo martes de cada mes", "Ultimo martes de cada mes", "Tercer miercoles de cada mes", "Primer jueves de cada mes", "Primer viernes de cada mes", "Tercer sabado de cada mes", "Mensual"],
-        "Otros": ["Segundo y cuarto domingo de cada mes"]
-    }
+    #frecuencia_mapeo = {
+        #"Semanal": ["Semanal"],
+        #"Una vez al mes": ["Ultimo lunes de cada mes", "Tercer lunes de cada mes", "Segundo martes de cada mes", "Ultimo martes de cada mes", "Tercer miercoles de cada mes", "Primer jueves de cada mes", "Primer viernes de cada mes", "Tercer sabado de cada mes", "Mensual"],
+        #"Otros": ["Segundo y cuarto domingo de cada mes"]
+    #}
+
+    def clasificar_frecuencia(f):
+    f_lower = f.lower()
+
+    if "semanal" in f_lower:
+        return "Semanal"
+    elif "y" in f_lower:
+        return "Otros"
+    elif any(palabra in f_lower for palabra in ["último", "primer", "segundo", "tercer", "mensual"]):
+        return "Una vez al mes"
+    else:
+        return "Otros"
+
+df['Frecuencia_categoria'] = df['Frecuencia'].apply(clasificar_frecuencia)
 
 df_filtrado = df.copy()
 
