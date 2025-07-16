@@ -50,7 +50,7 @@ with st.sidebar:
         return "Semanal"
     elif "y" in f_lower:
         return "Otros"
-    elif any(palabra in f_lower for palabra in ["último", "primer", "segundo", "tercer", "mensual"]):
+    elif any(palabra in f_lower for palabra in ["ultimo", "primer", "segundo", "tercer", "mensual"]):
         return "Una vez al mes"
     else:
         return "Otros"
