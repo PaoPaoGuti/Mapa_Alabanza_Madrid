@@ -31,16 +31,6 @@ with st.container():
 
     ¡Descubre dónde unirte para alabar a Dios en comunidad!
     """)
-    
-st.markdown("### 📲 Comparte esta app")
-st.markdown("""
-<a href="https://wa.me/?text=Descubre%20las%20oraciones%20de%20alabanza%20en%20Madrid%20con%20mapa,%20horarios%20y%20cómo%20llegar:%20https://nombre-de-tu-app.streamlit.app"
-   target="_blank">
-   <button style='background-color:#25D366; color:white; border:none; padding:10px 16px; border-radius:5px; font-size:16px; cursor:pointer;'>
-       Compartir por WhatsApp 📲
-   </button>
-</a>
-""", unsafe_allow_html=True)
 
 # Filtrado por día
 with st.sidebar:
@@ -118,6 +108,16 @@ for _, row in df_filtrado.iterrows():
 # Mostrar mapa
 st_folium(mapa, width=700, height=500)
 
+with st.sidebar:
+st.header("### 📲 Comparte esta app")
+st.markdown("""
+<a href="https://wa.me/?text=Descubre%20las%20oraciones%20de%20alabanza%20en%20Madrid%20con%20mapa,%20horarios%20y%20cómo%20llegar:%20https://nombre-de-tu-app.streamlit.app"
+   target="_blank">
+   <button style='background-color:#25D366; color:white; border:none; padding:10px 16px; border-radius:5px; font-size:16px; cursor:pointer;'>
+       Compartir por WhatsApp 📲
+   </button>
+</a>
+""", unsafe_allow_html=True)
 
 #git add App.py
 #git commit -m "Arreglar popup para mostrar enlace de Google Maps en marcador"
