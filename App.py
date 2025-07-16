@@ -67,7 +67,7 @@ elif misa_seleccionada == "No":
     df_filtrado = df_filtrado[df_filtrado["Misa previa"] == "no"]
 
 if frecuencia_personalizada != "Todas":
-    df_filtrado = df_filtrado[df_filtrado["Frecuencia"].isin(frecuencia_mapeo.get(frecuencia_personalizada, []))]
+    df_filtrado = df_filtrado[df_filtrado["Frecuencia_categoria"] == frecuencia_personalizada]
 
 
 st.markdown(f"🔥 **{len(df_filtrado)} oraciones de alabanza encontradas** para: {', '.join(dias_seleccionados) if dias_seleccionados else 'Todos los días'}")
